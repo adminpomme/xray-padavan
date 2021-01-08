@@ -14,6 +14,13 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
+      -
+        name: Run UPX
+        uses: crazy-max/ghaction-upx@v1
+        with:
+          version: latest
+          file: ./xray
+          args: -9
 
       - name: Check and release
         run: |
@@ -28,8 +35,6 @@ jobs:
             rm -rf *
               wget https://github.com/XTLS/Xray-core/releases/download/${CORE_LATEST_VER}/Xray-linux-mips32le.zip
               unzip Xray-linux-mips32le.zip
-              apt install upx -y
-              upx -9 xray
               rm -v !("xray")
               chmod +x xray 
             done
