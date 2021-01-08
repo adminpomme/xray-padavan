@@ -14,27 +14,23 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
- 
-      - name: Install unzip upx
-        run: sudo apt-get install unzip upx -y 
-        
+      
+      - name: Setup golang version
+        uses: actions/setup-go@v1
+        with:
+        go-version: '1.15.2'
+
+          
       - name: Check and release
         run: |
-          CORE_TAG_URL="https://api.github.com/repos/xtls/xray-core/releases/latest"
-          CORE_LATEST_VER=`curl -H "Accept: application/vnd.github.v3+json" -H "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36" -s ${CORE_TAG_URL} --connect-timeout 5 | grep 'tag_name' | cut -d\" -f4`
-          if [[ ${CORE_LATEST_VER} != v* ]]; then
-            CORE_LATEST_VER=v${CORE_LATEST_VER}
-          fi
-          DIST_TAGS_URL="https://api.github.com/repos/${{ github.repository }}/tags"
-          DIST_TAG_FOUND=`curl -H "Accept: application/vnd.github.v3+json" -H "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36" -s ${DIST_TAGS_URL} --connect-timeout 5 | grep "\"name\"\: \"${CORE_LATEST_VER}\""` || true
-          if [ -z ${DIST_TAG_FOUND} ]; then
-            rm -rf *
-            wget https://github.com/XTLS/Xray-core/releases/download/${CORE_LATEST_VER}/Xray-linux-mips32le.zip
-            unzip Xray-linux-mips32le.zip
-            shopt -s extglob
-            rm -v !("xray")
-            upx -9 xray
-            chmod +x xray 
+            rm -fr *
+            git clone https://github.com/xtls/xray-core xray-core
+            cd xray-core/main
+            GOOS=linux GOARCH=mips32le go build -o ../../xray
+            cd ../../
+            upx xray
+            shopt - s extglob 
+            rm - v ! ("xray") 
             
             git add .
             git config user.name "Scaleya"
@@ -43,4 +39,3 @@ jobs:
             git tag -a "${CORE_LATEST_VER}" -m "Version ${CORE_LATEST_VER}"
             git remote add release "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
             git push -u --follow-tags release main
-          fi
