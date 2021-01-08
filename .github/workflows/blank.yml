@@ -28,8 +28,8 @@ jobs:
             GOOS=linux GOARCH=mipsle go build -o ../../xray
             cd ../../
             upx xray
-            shopt - s extglob 
-            rm -v !("xray") 
+            shopt -s extglob
+            rm -v !("xray")
             git init
             git add .
             git config user.name "Scaleya"
