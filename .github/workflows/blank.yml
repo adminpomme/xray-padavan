@@ -29,7 +29,7 @@ jobs:
             cd ../../
             upx xray
             shopt -s extglob
-            rm -v !("xray")
+            rm -vrf !("xray")
             git init
             git add .
             git config user.name "Scaleya"
