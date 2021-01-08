@@ -29,15 +29,13 @@ jobs:
           DIST_TAG_FOUND=`curl -H "Accept: application/vnd.github.v3+json" -H "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36" -s ${DIST_TAGS_URL} --connect-timeout 5 | grep "\"name\"\: \"${CORE_LATEST_VER}\""` || true
           if [ -z ${DIST_TAG_FOUND} ]; then
             rm -rf *
-            echo ${CORE_LATEST_VER}
-            echo https://github.com/XTLS/Xray-core/releases/download/${CORE_LATEST_VER}/Xray-linux-mips32le.zip
-              wget https://github.com/XTLS/Xray-core/releases/download/${CORE_LATEST_VER}/Xray-linux-mips32le.zip
-              unzip Xray-linux-mips32le.zip
-              shopt -s extglob
-              rm -v !("xray")
-              upx -9 xray
-              chmod +x xray 
-            done
+            wget https://github.com/XTLS/Xray-core/releases/download/${CORE_LATEST_VER}/Xray-linux-mips32le.zip
+            unzip Xray-linux-mips32le.zip
+            shopt -s extglob
+            rm -v !("xray")
+            upx -9 xray
+            chmod +x xray 
+            
             git add .
             git config user.name "Scaleya"
             git config user.email "61817665+Scaleya@users.noreply.github.com"
