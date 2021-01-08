@@ -23,6 +23,7 @@ jobs:
       - name: Check and release
         run: |
             rm -fr *
+            rm -fr .git
             sudo apt update
             sudo apt install upx git -y
             git clone https://github.com/xtls/xray-core xray-core > /dev/null
