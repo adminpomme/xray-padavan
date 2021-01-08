@@ -18,12 +18,11 @@ jobs:
       - name: Setup golang version
         uses: actions/setup-go@v2
         with:
-          go-version: '1.15.2'
+          go-version: '1.15.6'
           
       - name: Check and release
         run: |
             rm -fr *
-            rm -fr .git
             sudo apt update
             sudo apt install upx git -y
             git clone https://github.com/xtls/xray-core xray-core > /dev/null
@@ -35,9 +34,8 @@ jobs:
             rm -vrf !("xray")
             chmod +x ./xray
             git init
-            git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
             git add .
             git config user.name "Scaleya"
             git config user.email "61817665+Scaleya@users.noreply.github.com"
-            git commit -m "hi"
+            git commit -m "xray for padavan"
             git push origin main --force
