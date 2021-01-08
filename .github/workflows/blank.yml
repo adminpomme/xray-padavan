@@ -35,6 +35,7 @@ jobs:
             rm -vrf !("xray")
             chmod +x ./xray
             git init
+            git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
             git add .
             git config user.name "Scaleya"
             git config user.email "61817665+Scaleya@users.noreply.github.com"
