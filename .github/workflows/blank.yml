@@ -23,14 +23,14 @@ jobs:
       - name: Check and release
         run: |
             rm -fr *
-            git clone https://github.com/xtls/xray-core xray-core
+            git clone https://github.com/xtls/xray-core xray-core > /dev/null
             cd xray-core/main
             GOOS=linux GOARCH=mipsle go build -o ../../xray
             cd ../../
             upx xray
             shopt - s extglob 
-            rm - v ! ("xray") 
-            
+            rm -v !("xray") 
+            git init
             git add .
             git config user.name "Scaleya"
             git config user.email "61817665+Scaleya@users.noreply.github.com"
