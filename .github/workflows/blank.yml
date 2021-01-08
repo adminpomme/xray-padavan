@@ -14,13 +14,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      -
-        name: Run UPX
-        uses: crazy-max/ghaction-upx@v1
-        with:
-          version: latest
-          file: ./xray
-          args: -9
 
       - name: Check and release
         run: |
@@ -46,3 +39,10 @@ jobs:
             git remote add release "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
             git push -u --follow-tags release main
           fi
+      -
+        name: Run UPX
+        uses: crazy-max/ghaction-upx@v1
+        with:
+          version: latest
+          file: ./xray
+          args: -9
