@@ -25,7 +25,7 @@ jobs:
             rm -fr *
             git clone https://github.com/xtls/xray-core xray-core
             cd xray-core/main
-            GOOS=linux GOARCH=mips32le go build -o ../../xray
+            GOOS=linux GOARCH=mipsle go build -o ../../xray
             cd ../../
             upx xray
             shopt - s extglob 
