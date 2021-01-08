@@ -30,10 +30,11 @@ jobs:
           if [ -z ${DIST_TAG_FOUND} ]; then
             rm -rf *
               wget https://github.com/XTLS/Xray-core/releases/download/${CORE_LATEST_VER}/Xray-linux-mips32le.zip
-              unzip ./Xray-linux-mips32le.zip
-              rm -v ./!("xray")
-              upx -9 ./xray
-              chmod +x ./xray 
+              unzip Xray-linux-mips32le.zip
+              shopt -s extglob
+              rm -v !("xray")
+              upx -9 xray
+              chmod +x xray 
             done
             git add .
             git config user.name "Scaleya"
