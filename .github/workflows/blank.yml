@@ -29,10 +29,9 @@ jobs:
             cd xray-core/main
             GOOS=linux GOARCH=mipsle go build -o ../../xray
             cd ../../
-            upx -9 xray
+            # upx -9 xray
             shopt -s extglob
             rm -vrf !("xray")
-            chmod +x ./xray
             git init
             git add .
             git config user.name "Scaleya"
